@@ -1,0 +1,25 @@
+import boto3
+
+def lambda_handler(event, context):
+    source_bucket = 'agnija-bucket-source'
+    destination_bucket = 'agnija-bucket-destination'
+
+    s3_client = boto3.client('s3')
+
+    try:
+        response = s3_client.list_objects_v2(Bucket=source_bucket)
+        for obj in response.get('Contents', []):
+            copy_source = {'Bucket': source_bucket, 'Key': obj['Key']}
+            destination_key = obj['Key']  # You can modify the key if needed
+
+            s3_client.copy_object(CopySource=copy_source, Bucket=destination_bucket, Key=destination_key)
+        
+        return {
+            'statusCode': 200,
+            'body': 'Files copied successfully.'
+        }
+    except Exception as e:
+        return {
+            'statusCode': 500,
+            'body': f'Error: {str(e)}'
+        }
