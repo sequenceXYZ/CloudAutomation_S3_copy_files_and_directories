@@ -1,0 +1,22 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:ListBucket",
+                "s3:GetObject",
+                "s3:PutObject"
+            ],
+            "Resource": [
+                "arn:aws:s3:::agnija-bucket-source/*",
+                "arn:aws:s3:::agnija-bucket-destination/*"
+            ]
+        }
+    ]
+}
+
+
+____________________________________
+in IAM > Roles > lambdaCopy-role-v5ovtlai
+must be 2 roles this one and add AmazonS3ReadOnlyAccess
